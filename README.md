@@ -319,7 +319,11 @@ Este projeto é parte de um desafio educacional da FIAP. Uso livre para fins aca
 
 ## Créditos
 O back-end e a infraestrutura do projeto foram desenvolvidos com 
+
 [Ana Carol Cortez](https://github.com/anacarolcortez)
+
 [Gabriel Soares](https://github.com/gabriel-dears)
+
 [Vitor Fidelis](https://github.com/VitorFidelis)
+
 [Lucas Vinícius](https://github.com/lcvinicius)
