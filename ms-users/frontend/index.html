@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="MS-Users — Painel de gerenciamento de usuários para o sistema de restaurantes FIAP Tech Challenge." />
+  <title>MS-Users · FIAP Tech Challenge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/main.css" />
+</head>
+<body>
+
+  <!-- ======== TOAST ======== -->
+  <div id="toast-container" aria-live="polite"></div>
+
+  <!-- ======== AUTH PAGES ======== -->
+  <div id="page-auth" class="page active">
+    <div class="auth-bg">
+      <div class="auth-glow auth-glow--1"></div>
+      <div class="auth-glow auth-glow--2"></div>
+    </div>
+    <div class="auth-card">
+      <!-- Brand -->
+      <div class="auth-brand">
+        <div class="brand-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="brand-name">MS-Users</h1>
+          <p class="brand-sub">FIAP Tech Challenge</p>
+        </div>
+      </div>
+
+      <!-- Tab switcher -->
+      <div class="auth-tabs" role="tablist">
+        <button id="tab-login" class="auth-tab active" role="tab" aria-selected="true" onclick="showAuthTab('login')">Entrar</button>
+        <button id="tab-register" class="auth-tab" role="tab" aria-selected="false" onclick="showAuthTab('register')">Cadastrar</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <form id="form-login" class="auth-form" novalidate onsubmit="handleLogin(event)">
+        <div class="field-group">
+          <label for="login-username" class="field-label">Login</label>
+          <div class="field-input-wrap">
+            <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <input type="text" id="login-username" class="field-input" placeholder="seu_login" autocomplete="username" required />
+          </div>
+        </div>
+        <div class="field-group">
+          <label for="login-password" class="field-label">Senha</label>
+          <div class="field-input-wrap">
+            <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <input type="password" id="login-password" class="field-input" placeholder="••••••••" autocomplete="current-password" required />
+            <button type="button" class="toggle-pass" aria-label="Mostrar senha" onclick="togglePass('login-password', this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+        <button type="submit" id="btn-login" class="btn btn--primary btn--full">
+          <span class="btn-text">Entrar</span>
+          <span class="btn-spinner hidden"></span>
+        </button>
+      </form>
+
+      <!-- REGISTER FORM -->
+      <form id="form-register" class="auth-form hidden" novalidate onsubmit="handleRegister(event)">
+        <div class="fields-row">
+          <div class="field-group">
+            <label for="reg-name" class="field-label">Nome completo</label>
+            <div class="field-input-wrap">
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <input type="text" id="reg-name" class="field-input" placeholder="João Silva" required />
+            </div>
+          </div>
+          <div class="field-group">
+            <label for="reg-login" class="field-label">Login</label>
+            <div class="field-input-wrap">
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <input type="text" id="reg-login" class="field-input" placeholder="joaosilva" required />
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <label for="reg-email" class="field-label">E-mail</label>
+          <div class="field-input-wrap">
+            <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <input type="email" id="reg-email" class="field-input" placeholder="joao@email.com" required />
+          </div>
+        </div>
+        <div class="fields-row">
+          <div class="field-group">
+            <label for="reg-password" class="field-label">Senha</label>
+            <div class="field-input-wrap">
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input type="password" id="reg-password" class="field-input" placeholder="••••••••" required />
+              <button type="button" class="toggle-pass" aria-label="Mostrar senha" onclick="togglePass('reg-password', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="field-group">
+            <label for="reg-role" class="field-label">Perfil</label>
+            <div class="field-input-wrap">
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <select id="reg-role" class="field-input field-select">
+                <option value="CLIENT">Cliente</option>
+                <option value="OWNER">Proprietário</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Address -->
+        <p class="section-label">Endereço</p>
+        <div class="fields-row">
+          <div class="field-group">
+            <label for="reg-zip" class="field-label">CEP</label>
+            <div class="field-input-wrap">
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <input type="text" id="reg-zip" class="field-input" placeholder="01310-100" maxlength="9" required />
+            </div>
+          </div>
+          <div class="field-group" style="flex:2">
+            <label for="reg-street" class="field-label">Rua</label>
+            <div class="field-input-wrap">
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+              <input type="text" id="reg-street" class="field-input" placeholder="Av. Paulista" required />
+            </div>
+          </div>
+        </div>
+        <div class="fields-row">
+          <div class="field-group">
+            <label for="reg-number" class="field-label">Número</label>
+            <div class="field-input-wrap">
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              <input type="number" id="reg-number" class="field-input" placeholder="1000" min="1" required />
+            </div>
+          </div>
+          <div class="field-group" style="flex:2">
+            <label for="reg-complement" class="field-label">Complemento <span class="optional">(opcional)</span></label>
+            <div class="field-input-wrap">
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <input type="text" id="reg-complement" class="field-input" placeholder="Apto 42" />
+            </div>
+          </div>
+        </div>
+        <div class="fields-row">
+          <div class="field-group">
+            <label for="reg-neighborhood" class="field-label">Bairro</label>
+            <div class="field-input-wrap">
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              <input type="text" id="reg-neighborhood" class="field-input" placeholder="Bela Vista" required />
+            </div>
+          </div>
+          <div class="field-group">
+            <label for="reg-city" class="field-label">Cidade</label>
+            <div class="field-input-wrap">
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+              <input type="text" id="reg-city" class="field-input" placeholder="São Paulo" required />
+            </div>
+          </div>
+          <div class="field-group">
+            <label for="reg-state" class="field-label">UF</label>
+            <div class="field-input-wrap">
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <input type="text" id="reg-state" class="field-input" placeholder="SP" maxlength="2" required />
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" id="btn-register" class="btn btn--primary btn--full">
+          <span class="btn-text">Criar conta</span>
+          <span class="btn-spinner hidden"></span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ======== DASHBOARD LAYOUT ======== -->
+  <div id="page-dashboard" class="page hidden">
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon brand-icon--sm">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <span class="sidebar-brand-text">MS-Users</span>
+        <button class="sidebar-close" id="sidebar-close" aria-label="Fechar menu" onclick="toggleSidebar(false)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <nav class="sidebar-nav" aria-label="Navegação principal">
+        <button class="nav-item active" id="nav-users" onclick="navigateTo('users')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>Usuários</span>
+        </button>
+        <button class="nav-item" id="nav-profile" onclick="navigateTo('profile')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span>Meu Perfil</span>
+        </button>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-chip" id="sidebar-user-chip">
+          <div class="user-avatar" id="sidebar-avatar">?</div>
+          <div class="user-info">
+            <span class="user-name" id="sidebar-username">—</span>
+            <span class="user-role" id="sidebar-role">—</span>
+          </div>
+        </div>
+        <button class="btn-logout" id="btn-logout" onclick="handleLogout()" title="Sair">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Overlay for mobile -->
+    <div id="sidebar-overlay" class="sidebar-overlay hidden" onclick="toggleSidebar(false)"></div>
+
+    <!-- Main content -->
+    <div class="main-wrap">
+      <header class="topbar">
+        <button class="topbar-menu" id="topbar-menu" aria-label="Abrir menu" onclick="toggleSidebar(true)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <h2 class="topbar-title" id="topbar-title">Usuários</h2>
+        <div class="topbar-actions" id="topbar-actions"></div>
+      </header>
+
+      <main class="content" id="main-content">
+        <!-- Dynamic sections injected by JS -->
+      </main>
+    </div>
+  </div>
+
+  <!-- ======== MODAL ======== -->
+  <div id="modal-overlay" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card" id="modal-card">
+      <button class="modal-close" aria-label="Fechar" onclick="closeModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <script src="scripts/api.js"></script>
+  <script src="scripts/auth.js"></script>
+  <script src="scripts/users.js"></script>
+  <script src="scripts/ui.js"></script>
+  <script src="scripts/app.js"></script>
+</body>
+</html>
